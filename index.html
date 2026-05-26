@@ -1,341 +1,331 @@
-<link rel="preconnect" href="https://googleapis.com">
-<link rel="preconnect" href="https://gstatic.com" crossorigin>
-<link href="https://googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Свадьба Василия и Анастасии</title>
+    
+    <!-- Свадебные шрифты -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 
-<style>
-    /* Основные стили страницы */
-    .wd-page {
-        font-family: 'Montserrat', sans-serif;
-        color: #333333;
-        line-height: 1.6;
-        text-align: center;
-        background-color: #fcfbfa;
-    }
+    <style>
+        :root {
+            --bg-color: #fcfbfa;
+            --text-main: #333333;
+            --text-secondary: #767676;
+            --accent-color: #9ca998; 
+            --font-title: 'Cormorant Garamond', serif;
+            --font-body: 'Montserrat', sans-serif;
+        }
 
-    .wd-page section {
-        padding: 80px 20px;
-        max-width: 800px;
-        margin: 0 auto;
-    }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    .wd-page h2 {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 2.5rem;
-        font-weight: 400;
-        margin-bottom: 30px;
-        color: #333333;
-    }
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-    .wd-page p {
-        font-size: 1.1rem;
-        color: #767676;
-        margin-bottom: 20px;
-    }
+        /* Анимация плавного появления блоков при прокрутке */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+            will-change: opacity, transform;
+        }
 
-    /* Эстетичный свадебный фон-градиент */
-    .wd-hero {
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        background: linear-gradient(135deg, #f5f2eb 0%, #eadecc 50%, #dfd3c3 100%);
-        padding: 20px;
-    }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-    .wd-hero h1 {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 4rem;
-        font-weight: 400;
-        margin-bottom: 15px;
-        font-style: italic;
-        color: #4a4a4a;
-    }
+        section {
+            padding: 100px 20px;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
 
-    .wd-hero .wd-subtitle {
-        font-size: 1.1rem;
-        text-transform: uppercase;
-        letter-spacing: 3px;
-        margin-bottom: 30px;
-        color: #767676;
-    }
+        h2 {
+            font-family: var(--font-title);
+            font-size: 3rem;
+            font-weight: 400;
+            margin-bottom: 25px;
+            color: var(--text-main);
+        }
 
-    .wd-hero .wd-date {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 2rem;
-        border-top: 1px solid #9ca998;
-        border-bottom: 1px solid #9ca998;
-        padding: 10px 30px;
-        margin-bottom: 40px;
-        color: #4a4a4a;
-    }
+        h2::after {
+            content: "";
+            display: block;
+            width: 40px;
+            height: 1px;
+            background-color: var(--accent-color);
+            margin: 15px auto 0 auto;
+        }
 
-    /* Стильные плашки активного таймера */
-    .wd-timer-grid {
-        display: flex;
-        justify-content: center;
-        gap: 15px;
-    }
+        p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
 
-    .wd-timer-card {
-        background: rgba(255, 255, 255, 0.85);
-        padding: 15px;
-        border-radius: 8px;
-        min-width: 85px;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.04);
-    }
+        /* Главный экран с анимацией фона */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            padding: 20px;
+        }
 
-    .wd-timer-digit {
-        font-size: 2rem;
-        font-family: 'Cormorant Garamond', serif;
-        color: #333333;
-        font-weight: 600;
-    }
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.5)), 
+                        url('https://unsplash.com') no-repeat center center/cover;
+            z-index: -1;
+            animation: zoomBg 20s infinite alternate ease-in-out;
+        }
 
-    .wd-timer-word {
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        color: #767676;
-        margin-top: 2px;
-    }
+        @keyframes zoomBg {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.08); }
+        }
 
-    /* Таймлайн программы дня */
-    .wd-timeline {
-        max-width: 500px;
-        margin: 40px auto 0 auto;
-        text-align: left;
-    }
+        .hero-content {
+            animation: fadeInHero 1.5s ease-out;
+        }
 
-    .wd-time-item {
-        padding-left: 30px;
-        border-left: 2px solid #9ca998;
-        position: relative;
-        padding-bottom: 40px;
-    }
+        @keyframes fadeInHero {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
 
-    .wd-time-item::before {
-        content: "";
-        position: absolute;
-        left: -6px;
-        top: 5px;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background-color: #9ca998;
-    }
+        .hero h1 {
+            font-family: var(--font-title);
+            font-size: 5rem;
+            margin-bottom: 15px;
+            font-style: italic;
+            font-weight: 400;
+            color: #222222;
+            text-shadow: 0 2px 10px rgba(255,255,255,0.4);
+        }
 
-    .wd-time-val {
-        font-weight: 600;
-        color: #9ca998;
-        font-size: 1.1rem;
-        margin-bottom: 5px;
-    }
+        .hero .subtitle {
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin-bottom: 35px;
+            color: var(--text-secondary);
+        }
 
-    .wd-time-title {
-        font-size: 1.2rem;
-        font-weight: 500;
-        color: #333333;
-        margin-bottom: 5px;
-    }
+        .hero .date {
+            font-family: var(--font-title);
+            font-size: 2.4rem;
+            border-top: 1px solid var(--accent-color);
+            border-bottom: 1px solid var(--accent-color);
+            padding: 12px 50px;
+            margin-bottom: 50px;
+            color: #222222;
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(4px);
+        }
 
-    .wd-time-desc {
-        font-size: 0.95rem;
-        color: #767676;
-    }
+        /* Стильный живой таймер */
+        .timer-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
 
-    /* Кружки дресс-кода */
-    .wd-palette {
-        display: flex;
-        justify-content: center;
-        gap: 15px;
-        margin-top: 30px;
-        flex-wrap: wrap;
-    }
+        .timer-card {
+            background: rgba(255, 255, 255, 0.88);
+            padding: 20px;
+            border-radius: 12px;
+            min-width: 95px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.7);
+            transition: transform 0.3s;
+        }
+        .timer-card:hover { transform: translateY(-5px); }
 
-    .wd-circle {
-        width: 55px;
-        height: 55px;
-        border-radius: 50%;
-        display: inline-block;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-    }
+        .timer-val {
+            font-size: 2.4rem;
+            font-family: var(--font-title);
+            color: var(--text-main);
+            font-weight: 400;
+        }
 
-    .wd-c1 { background-color: #9ca998; }
-    .wd-c2 { background-color: #bdc5b9; }
-    .wd-c3 { background-color: #e5e1da; }
-    .wd-c4 { background-color: #dfd3c3; }
-    .wd-c5 { background-color: #8d8174; }
+        .timer-lbl {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
 
-    /* Анкета RSVP */
-    .wd-form-block {
-        background: #ffffff;
-        padding: 40px;
-        border-radius: 12px;
-        box-shadow: 0 10px 35px rgba(0,0,0,0.04);
-        max-width: 480px;
-        margin: 30px auto 0 auto;
-        text-align: left;
-    }
+        /* Программа дня */
+        .timeline {
+            max-width: 550px;
+            margin: 50px auto 0 auto;
+            text-align: left;
+        }
 
-    .wd-group {
-        margin-bottom: 25px;
-    }
+        .timeline-item {
+            padding-left: 35px;
+            border-left: 1px solid var(--accent-color);
+            position: relative;
+            padding-bottom: 50px;
+        }
 
-    .wd-group label {
-        display: block;
-        margin-bottom: 8px;
-        font-size: 0.85rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        color: #333333;
-    }
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -6px;
+            top: 6px;
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            transition: transform 0.3s;
+        }
+        .timeline-item:hover::before { transform: scale(1.5); }
 
-    .wd-input {
-        width: 100%;
-        padding: 14px;
-        border: 1px solid #e0e0e0;
-        border-radius: 6px;
-        font-family: 'Montserrat', sans-serif;
-        font-size: 1rem;
-        background-color: #fdfdfd;
-        box-sizing: border-box;
-    }
+        .time {
+            font-weight: 500;
+            color: var(--accent-color);
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            font-family: var(--font-title);
+        }
 
-    .wd-radios {
-        display: flex;
-        gap: 20px;
-        padding-top: 5px;
-    }
+        .event-title {
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
 
-    .wd-radio-label {
-        font-size: 1rem;
-        color: #555555;
-        cursor: pointer;
-    }
+        /* Кружки дресс-кода */
+        .palette {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
 
-    .wd-btn {
-        width: 100%;
-        padding: 16px;
-        background-color: #9ca998;
-        color: #ffffff;
-        border: none;
-        border-radius: 6px;
-        font-size: 0.95rem;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        cursor: pointer;
-        transition: background 0.3s;
-    }
+        .circle {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            cursor: pointer;
+        }
+        .circle:hover { transform: scale(1.18); }
 
-    .wd-btn:hover {
-        background-color: #879483;
-    }
+        /* Элегантная форма RSVP */
+        .rsvp-card {
+            background: white;
+            padding: 50px 40px;
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.03);
+            max-width: 500px;
+            margin: 40px auto 0 auto;
+            text-align: left;
+            border: 1px solid #f2eee9;
+        }
 
-    .wd-footer {
-        padding: 60px 20px;
-        background-color: #f4f2ef;
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 1.6rem;
-        font-style: italic;
-        color: #4a4a4a;
-    }
+        .form-group { margin-bottom: 25px; }
 
-    @media (max-width: 600px) {
-        .wd-hero h1 { font-size: 2.8rem; }
-        .wd-page h2 { font-size: 2rem; }
-        .wd-timer-grid { gap: 8px; }
-        .wd-timer-card { min-width: 72px; padding: 10px 5px; }
-        .wd-form-block { padding: 25px 20px; }
-    }
-</style>
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
 
-<div class="wd-page">
+        .input-field {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid #e2ded8;
+            border-radius: 8px;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            background-color: #faf9f7;
+            outline: none;
+            transition: border 0.3s;
+        }
+        .input-field:focus { border-color: var(--accent-color); background-color: #fff; }
+
+        .radio-opts { display: flex; gap: 25px; padding-top: 5px; }
+        .radio-label { font-size: 1rem; color: #444; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+
+        .btn-send {
+            width: 100%;
+            padding: 18px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .btn-send:hover { background-color: #879483; transform: translateY(-2px); }
+
+        footer {
+            padding: 100px 20px;
+            background-color: #f5f3f0;
+            font-family: var(--font-title);
+            font-size: 2rem;
+            font-style: italic;
+            color: #4a4a4a;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 3.2rem; }
+            h2 { font-size: 2.2rem; }
+            .timer-container { gap: 10px; }
+            .timer-card { min-width: 76px; padding: 12px 5px; }
+            .rsvp-card { padding: 35px 20px; }
+        }
+    </style>
+</head>
+<body>
+
     <!-- Главный экран -->
-    <div class="wd-hero">
-        <div class="wd-subtitle">Приглашение на свадьбу</div>
-        <h1>Василий и Анастасия</h1>
-        <div class="wd-date">29 августа 2026</div>
-        
-        <!-- Сетка таймера (цифры обновляются замаскированным скриптом) -->
-        <div class="wd-timer-grid" id="wedding-timer-container">
-            <div class="wd-timer-card">
-                <div class="wd-timer-digit" id="act-d">00</div>
-                <div class="wd-timer-word" id="wrd-d">Дней</div>
-            </div>
-            <div class="wd-timer-card">
-                <div class="wd-timer-digit" id="act-h">00</div>
-                <div class="wd-timer-word" id="wrd-h">Часов</div>
-            </div>
-            <div class="wd-timer-card">
-                <div class="wd-timer-digit" id="act-m">00</div>
-                <div class="wd-timer-word" id="wrd-m">Минут</div>
-            </div>
-            <div class="wd-timer-card">
-                <div class="wd-timer-digit" id="act-s">00</div>
-                <div class="wd-timer-word" id="wrd-s">Секунд</div>
-            </div>
-        </div>
-    </div>
+    <div class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div class="subtitle">Приглашение на свадьбу</div>
+            <h1>Василий и Анастасия</h1>
+            <div class="date">29 августа 2026</div>
 
-    <!-- Раздел приглашения -->
-    <section>
-        <h2>Дорогие близкие и друзья!</h2>
-        <p>Один день в этом году будет для нас особенным, и мы хотим провести его в кругу самых любимых людей. Мы рады пригласить вас на нашу свадьбу!</p>
-        <p>Разделите с нами этот счастливый день, наполненный любовью, улыбками и теплыми моментами.</p>
-    </section>
-
-    <!-- Программа свадебного дня -->
-    <section>
-        <h2>Программа дня</h2>
-        <div class="wd-timeline">
-            <div class="wd-time-item">
-                <div class="wd-time-val">16:00</div>
-                <div class="wd-time-title">Сбор гостей и фуршет</div>
-                <div class="wd-time-desc">Приветственные напитки, легкие закуски и начало праздника.</div>
-            </div>
-            <div class="wd-time-item">
-                <div class="wd-time-val">16:30</div>
-                <div class="wd-time-title">Торжественная церемония</div>
-                <div class="wd-time-desc">Самый важный и трогательный момент нашего дня.</div>
-            </div>
-            <div class="wd-time-item">
-                <div class="wd-time-val">17:30</div>
-                <div class="wd-time-title">Свадебный банкет</div>
-                <div class="wd-time-desc">Ужин, поздравления, танцы и развлекательная программа.</div>
-            </div>
-            <div class="wd-time-item" style="padding-bottom: 10px;">
-                <div class="wd-time-val">22:00</div>
-                <div class="wd-time-title">Свадебный торт и финал</div>
-                <div class="wd-time-desc">Яркое и сладкое завершение торжества.</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Дресс-код -->
-    <section>
-        <h2>Дресс-код</h2>
-        <p>Нам будет очень приятно, если при выборе нарядов вы поддержите нежную цветовую гамму нашей свадьбы:</p>
-        <div class="wd-palette">
-            <span class="wd-circle wd-c1"></span>
-            <span class="wd-circle wd-c2"></span>
-            <span class="wd-circle wd-c3"></span>
-            <span class="wd-circle wd-c4"></span>
-            <span class="wd-circle wd-c5"></span>
-        </div>
-    </section>
-
-    <!-- Форма RSVP -->
-    <section>
-        <h2>Подтверждение присутствия</h2>
-        <p>Пожалуйста, ответьте на вопросы ниже до 1 августа 2026 года, чтобы мы могли завершить подготовку.</p>
-        
-        <form class="wd-form-block" onsubmit="alert('Спасибо! Ваш ответ успешно сохранен.'); return false;">
-            <div class="wd-group">
-                <label>Ваше Имя и Фамилия</label>
-                <input type="text" class="wd-input" required placeholder="Иван Иванов">
-            </div>
-            <div class="wd-group">
-                <label>Сможете ли вы присутствовать?</label>
-                <div class="wd-radios">
-                    <label class="wd-radio-label"><input type="radio" name="wedding-go" checked> Да, приду</label>
+            <!-- Живой тикающий таймер -->
+            <div class="timer-container" id="timer">
+                <div class="timer-card">
+                    <div class="timer-val" id="d-val">00</div>
+                    <div class="timer-lbl" id="d-lbl">Дней</div>
+                </div>
+                <div class="timer-card">
+                    <div class="timer-val" id="h-val">00</div>
+                    <div class="timer-lbl" id="h-lbl">Часов</div>
+                </div>
